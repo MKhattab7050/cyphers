@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pharmacies API Example</title>
+  <style>
+    .pharmacy {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+    }
+    .pharmacy img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .pharmacy a {
+      color: blue;
+      text-decoration: underline;
+    }
+    .meds-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .med {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .med img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pharmacies List</h1>
+  <div id="pharmacies-list"></div>
+
+  <script>
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkNWIxZTU2NC00NDJhLTRmOWMtYmFiYy02Y2QwMzhhYWFmY2MiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJnaXZlbl9uYW1lIjoic3RyaW5nIiwiVXNlckFkZHJlc3MiOiJUZXN0QWRkcmVzcyIsImp0aSI6IjZlYjZhMmZiLWNmY2EtNDRmMS1iOTlkLTM0N2MzOTc1NmViNSIsInJvbGVzIjpbIk1lbWJlciJdLCJleHAiOjE3NDY0NTE4NzMsImlzcyI6IkNhckNhcHNvbGUgVXNlcnMiLCJhdWQiOiJDYXJDYXBzb2xlIEFwcCJ9.zaWAHIr0WO7kcPQlM37zXzMzgnzeQtDusvPbXO2X5kY";
+
+    fetch("https://carecapsole.tryasp.net/pharmacy", {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        return res.json();
+      } else {
+        throw new Error("الرد مش JSON");
+      }
+    })
+    .then(data => {
+      const container = document.getElementById("pharmacies-list");
+
+      if (Array.isArray(data)) {
+        data.forEach(pharmacy => {
+          const card = document.createElement("div");
+          card.className = "pharmacy";
+
+          // الأدوية
+          let itemsHTML = `<div class="meds-list">`;
+          if (Array.isArray(pharmacy.items) && pharmacy.items.length > 0) {
+            pharmacy.items.forEach(item => {
+              itemsHTML += `
+                <div class="med">
+                  <img src="${item.imageURL}" alt="${item.name}" onerror="this.style.display='none'">
+                  <div>
+                    <strong>${item.name}</strong><br>
+                    النوع: ${item.type}<br>
+                    المادة الفعالة: ${item.effectiveSubstance || 'غير متوفرة'}<br>
+                    السعر: ${item.price} EGP<br>
+                    الكمية المتاحة: ${item.count}
+                  </div>
+                </div>
+              `;
+            });
+          } else {
+            itemsHTML += `<p>لا توجد أدوية حالياً.</p>`;
+          }
+          itemsHTML += `</div>`;
+
+          // تفاصيل الصيدلية
+          card.innerHTML = `
+            <h3>${pharmacy.name}</h3>
+            <img src="${pharmacy.imageURL}" alt="Pharmacy Image" onerror="this.style.display='none'">
+            <p><strong>Phone:</strong> ${pharmacy.phoneNumbers}</p>
+            <p><strong>Location:</strong> ${pharmacy.location}</p>
+            <p><strong>Google Maps:</strong> <a href="${pharmacy.mapsLocation}" target="_blank">${pharmacy.mapsLocation}</a></p>
+            <p><strong>WhatsApp:</strong> <a href="${pharmacy.whatsUrl}" target="_blank">${pharmacy.whatsUrl}</a></p>
+            <h4>الأدوية:</h4>
+            ${itemsHTML}
+          `;
+
+          container.appendChild(card);
+        });
+      } else {
+        container.innerHTML = "<p>البيانات المستلمة ليست قائمة.</p>";
+      }
+    })
+    .catch(err => {
+      console.error("خطأ:", err);
+      document.getElementById("pharmacies-list").innerHTML = `<p>حدث خطأ: ${err.message}</p>`;
+    });
+  </script>
+
+</body>
+</html>

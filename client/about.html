@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" 
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.css" 
+    integrity="sha512-6p+GTq7fjTHD/sdFPWHaFoALKeWOU9f9MPBoPnvJEWBkGS4PKVVbCpMps6IXnTiXghFbxlgDE8QRHc3MU91lJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="output.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+      @media only screen and (min-width: 1450px) {
+  
+      #hero{
+      width:1250px;
+      margin-left: 170px;
+      }
+
+      #mainp{
+        margin-top: 30px;
+      }
+      
+      #features{
+        width:1250px;
+        margin-left: 125px;
+        
+      }
+      #nav{
+        position: sticky;
+        z-index: 1;
+        box-shadow: 0.5px 0.5px 7px  #e1e1e1;
+      }
+      #footer{
+        z-index: 1;
+      }
+      img{
+        margin-left: 35px;
+      }
+
+      #about-section {
+        max-width: 1250px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .team-member {
+        transition: transform 0.3s ease;
+      }
+      
+      .team-member:hover {
+        transform: translateY(-10px);
+      }
+
+      
+::-webkit-scrollbar {
+  width: 10px; 
+  background-color: #464667; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #272d73; 
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2c327a; 
+}
+
+    }
+
+    /* Animation styles */
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    @keyframes floatReverse {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(15px);
+      }
+    }
+
+    /* Floating dots */
+    .floating-dot {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.7;
+      z-index: 0;
+    }
+
+    .dot-1 {
+      top: 10%;
+      left: 8%;
+      width: 12px;
+      height: 12px;
+      background-color: #7c3aed;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .dot-2 {
+      top: 20%;
+      right: 15%;
+      width: 10px;
+      height: 10px;
+      background-color: #6366f1;
+      animation: floatReverse 8s ease-in-out infinite;
+    }
+
+    .dot-3 {
+      top: 40%;
+      left: 30%;
+      width: 14px;
+      height: 14px;
+      background-color: #8b5cf6;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .dot-4 {
+      bottom: 30%;
+      right: 25%;
+      width: 10px;
+      height: 10px;
+      background-color: #a78bfa;
+      animation: floatReverse 9s ease-in-out infinite;
+    }
+
+    /* Section styling */
+    .section {
+      position: relative;
+      padding: 80px 0;
+      overflow: hidden;
+    }
+
+    .bg-dark-gradient {
+      background: linear-gradient(to bottom, #111827, #1f2937, #111827);
+    }
+
+    .bg-purple-dark {
+      background-color: #1e1b4b;
+    }
+
+    /* Card styling */
+    .card {
+      background: rgba(30, 27, 75, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Timeline styling */
+    .timeline-item {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #6366f1;
+    }
+
+    .timeline-item:after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 25px;
+      width: 1px;
+      height: calc(100% - 20px);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .timeline-item:last-child:after {
+      display: none;
+    }
+    </style>
+
+    <title>About Us - Cyphers</title>
+</head>
+<body class="font-body">
+    <!--navbar-->
+<nav id="nav"
+  class="relative lg:px-30 lg:pr-10 xl:px-14  flex w-full flex-nowrap items-center justify-between bg-black py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
+  data-twe-navbar-ref>
+  
+  <div class="flex w-full flex-wrap items-center justify-between px-3">
+    <div class="ms-2">
+      <a class="text-xl text-black dark:text-white" href="index.html"><img src="img/Logo.png" alt="logo" width="150px"></a>
+    </div>
+    <!-- Hamburger button for mobile view -->
+    <button
+      class="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+      type="button"
+      data-twe-collapse-init
+      data-twe-target="#navbarSupportedContent2"
+      aria-controls="navbarSupportedContent2"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <!-- Hamburger icon -->
+      <span
+        class="[&>svg]:w-7 [&>svg]:stroke-black/50 dark:[&>svg]:stroke-neutral-200">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor">
+          <path
+            fill-rule="evenodd"
+            d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+            clip-rule="evenodd" />
+        </svg>
+      </span>
+    </button>
+
+    <!-- Collapsible navbar container -->
+    <div
+      class="!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
+      id="navbarSupportedContent2"
+      data-twe-collapse-item>
+      <!-- links -->
+      <a href="http://localhost:3000/" ><button style="font-size: 13.5px;" >p2p</button></a>
+      <ul
+        class="list-style-none  ms-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
+        data-twe-navbar-nav-ref>
+        <!-- Home link -->
+        <li
+          class="my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
+          data-twe-nav-item-ref>
+          <a
+            class= "p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            aria-current="page"
+            href="index.html"
+            data-twe-nav-link-ref
+            >Home</a
+          >
+        </li>
+        <!-- Chat link -->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="chat.html"
+            data-twe-nav-link-ref
+            >Chat</a
+          >
+        </li>
+        <!--wallet-->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="wallet.html"
+            data-twe-nav-link-ref
+            >Wallet</a
+          >
+        </li>
+        <!-- App link -->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="#"
+            data-twe-nav-link-ref
+            >App</a
+          >
+        </li>
+        <!--About-->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="#"
+            data-twe-nav-link-ref
+            >About</a
+          >
+        </li>
+      </ul>
+      <span class="hidden lg:inline-block border-l border-white  h-7 mx-3 select-none"></span>
+      <div class="btns flex flex-col md:flex-row  gap-4">
+        <a href="login.html">
+          <button
+          type="button"
+          class=" flex w-fit rounded-full bg-black px-3 pb-2 pt-2.5 md:px-6 text-xs md:text-sm font-medium uppercase leading-normal text-white shadow-white-3 transition duration-200 ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 ">
+          <i class="ri-user-fill mr-1.5"></i>Login
+        </button>
+        </a>
+        
+        <button
+        type="button"
+        class=" flex w-fit rounded-full bg-white  px-3 pb-2 pt-2.5 md:px-6 text-xs md:text-sm font-medium uppercase leading-normal text-black shadow-white-3 transition duration-200 ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 focus:bg-white focus:shadow-white-2 ">
+        <i class="ri-download-line mr-1.5"></i>download app
+      </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] bg-gradient-to-b from-gray-900 via-black to-gray-800 overflow-hidden flex items-center">
+  <!-- Floating dots -->
+  <div class="floating-dot dot-1"></div>
+  <div class="floating-dot dot-2"></div>
+  <div class="floating-dot dot-3"></div>
+  <div class="floating-dot dot-4"></div>
+  
+  <div class="container mx-auto px-6 z-10 pl-20">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 text-center md:text-left">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">About <span class="text-purple-400">Cyphers</span></h1>
+        <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
+          We're revolutionizing private communication with decentralized, encrypted technology that puts you in control of your data.
+        </p>
+        <a href="#mission" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
+          Our Mission
+        </a>
+      </div>
+      <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center">
+        <img src="img/about.svg" alt="About Cyphers" class="w-full max-w-md mb-6">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission Section -->
+<section id="mission" class="section bg-dark-gradient">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Our <span class="text-purple-400">Mission</span></h2>
+      <div class="w-20 h-1 bg-purple-500 mx-auto mb-6"></div>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        To create a world where private communication is accessible to everyone, without compromising on security or convenience.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="card p-8 rounded-xl">
+        <div class="text-purple-400 text-4xl mb-4">
+          <i class="ri-shield-keyhole-line"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Privacy First</h3>
+        <p class="text-gray-300">
+          We believe privacy is a fundamental right. Our technology ensures your conversations stay between you and the intended recipient.
+        </p>
+      </div>
+      
+      <div class="card p-8 rounded-xl">
+        <div class="text-purple-400 text-4xl mb-4">
+          <i class="ri-global-line"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Decentralized</h3>
+        <p class="text-gray-300">
+          No central servers means no single point of failure or control. Your data belongs to you, not corporations.
+        </p>
+      </div>
+      
+      <div class="card p-8 rounded-xl">
+        <div class="text-purple-400 text-4xl mb-4">
+          <i class="ri-user-voice-line"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Community Driven</h3>
+        <p class="text-gray-300">
+          We listen to our users and build features that matter to real people, not advertisers or data brokers.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Values Section -->
+<section class="section bg-purple-dark">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Our <span class="text-purple-400">Values</span></h2>
+      <div class="w-20 h-1 bg-purple-500 mx-auto mb-6"></div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card p-6 rounded-xl">
+        <div class="text-purple-400 text-3xl mb-4">
+          <i class="ri-lock-2-line"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Security</h3>
+        <p class="text-gray-300">
+          We implement the strongest encryption standards and regularly audit our systems.
+        </p>
+      </div>
+      
+      <div class="card p-6 rounded-xl">
+        <div class="text-purple-400 text-3xl mb-4">
+          <i class="ri-open-source-line"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Transparency</h3>
+        <p class="text-gray-300">
+          Our code is open source so anyone can verify our security claims.
+        </p>
+      </div>
+      
+      <div class="card p-6 rounded-xl">
+        <div class="text-purple-400 text-3xl mb-4">
+          <i class="ri-user-3-line"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">User Control</h3>
+        <p class="text-gray-300">
+          You own your data. We don't collect or sell personal information.
+        </p>
+      </div>
+      
+      <div class="card p-6 rounded-xl">
+        <div class="text-purple-400 text-3xl mb-4">
+          <i class="ri-lightbulb-flash-line"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Innovation</h3>
+        <p class="text-gray-300">
+          We continuously push boundaries to improve privacy technology.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-purple-900 to-indigo-900">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to take control of your privacy?</h2>
+    <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+      Join millions of users who trust Cyphers for secure communication and transactions.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="chat.html" class="inline-block bg-white hover:bg-gray-100 text-purple-900 font-medium py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
+        Start Chatting
+      </a>
+      <a href="wallet.html" class="inline-block bg-transparent hover:bg-white hover:bg-opacity-10 text-white font-medium py-3 px-8 rounded-full border border-white transition duration-300 transform hover:scale-105">
+        Explore Wallet
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer id="footer" class="bg-gray-950 py-10 border-t border-gray-800 pl-20" >
+  <div class="container mx-auto px-6 lg:px-12">
+    <!-- Main Footer Content -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+      <!-- Logo and Description -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-3">
+          <img src="img/Logo.png" alt="Cyphers Logo" class="h-[70px]">
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Secure, decentralized communication platform with end-to-end encryption and cryptocurrency integration.
+        </p>
+        <div class="flex space-x-4 pt-2">
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-discord text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-github text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-telegram text-xl"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-5 relative pb-2">
+          Quick Links
+          <span class="absolute bottom-0 left-0 w-10 h-0.5 bg-purple-500"></span>
+        </h3>
+        <ul class="space-y-3">
+          <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Home</a></li>
+          <li><a href="chat.html" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Chat</a></li>
+          <li><a href="wallet.html" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Wallet</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Download App</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal (Moved Up) -->
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-5 relative pb-2">
+          Legal
+          <span class="absolute bottom-0 left-0 w-10 h-0.5 bg-purple-500"></span>
+        </h3>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Privacy Policy</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Terms of Service</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Cookie Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources (Moved Down & Modified) -->
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-5 relative pb-2">
+          Resources
+          <span class="absolute bottom-0 left-0 w-10 h-0.5 bg-purple-500"></span>
+        </h3>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> Documentation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 flex items-center group">
+            <i class="ri-arrow-right-s-line mr-2 text-purple-400 group-hover:translate-x-1 transition-transform"></i> API</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-gray-800 my-8"></div>
+
+    <!-- Bottom Copyright -->
+    <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+      <p class="text-gray-500 text-sm mb-4 md:mb-0">
+        © 2025 Cyphers. All rights reserved. Decentralized and secure.
+      </p>
+      <div class="flex space-x-6">
+        <a href="#" class="text-gray-500 hover:text-purple-400 transition duration-300 text-sm hover:underline">Status</a>
+        <a href="#" class="text-gray-500 hover:text-purple-400 transition duration-300 text-sm hover:underline">Contact</a>
+        <a href="#" class="text-gray-500 hover:text-purple-400 transition duration-300 text-sm hover:underline">Careers</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<!--scroll reveal-->
+<script src="scrollreveal.min.js"></script>
+<!--main js-->
+<script src="main.js"></script>
+<script
+  type="text/javascript"
+  src="../node_modules/tw-elements/js/tw-elements.umd.min.js"></script>
+</body>
+</html>

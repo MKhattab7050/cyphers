@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in Cyphers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+        :root {
+            --background-primary: #0f111a;
+            --background-secondary: #121624;
+            --background-tertiary: #cecece;
+            --accent-primary: #4a6cff;
+            --accent-secondary: #6b7aff;
+            --text-primary: #cecece;
+            --text-secondary: #d2d0d0;
+            --border-color: rgba(255,255,255,0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            display: flex;
+
+            color: var(--text-primary);
+            background: url(img/bg.png);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .main-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+
+
+        .sidebar {
+            background-color: #1a2035;
+            backdrop-filter: blur(8px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 50;
+            width: 18%; 
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0; /* Prevent shrinking */
+            
+        }
+
+        .sidebar-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 9rem;
+        }
+
+        .sidebar-menu {
+            padding-top: 0.3rem;
+            padding-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0.85rem 0.8rem;
+            color: #94a3b8;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+            text-decoration: none;
+            
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link:active {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-left-color: var(--accent-primary);
+        }
+        #chaat{
+        background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-left-color: var(--accent-primary);
+        }
+        .words:hover {
+    box-shadow: 0 8px 8px #4a6bff96, 
+                0 0 8px #6b7affa0;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+        .sidebar-link i {
+            font-size: 1.3rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .link-text {
+            margin-left: 0.75rem;
+        }
+
+        /* Login Container Styles */
+        .content-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-weight: bold;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            margin: 20px 0 30px;
+            color: var(--text-secondary);
+        }
+
+        span {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: var(--accent-primary);
+            font-size: 14px;
+            text-decoration: none;
+            margin: 15px 0;
+        }
+
+        button {
+            border-radius: 20px;
+            border: 1px solid whitesmoke;
+            background-color: #1a2035;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button.ghost {
+            background-color: transparent;
+            border-color: var(--text-primary);
+        }
+
+        button.ghost:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        form {
+            background-color: rgb(216, 215, 215);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        input {
+            background-color: var(--background-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(74, 108, 255, 0.3);
+        }
+
+        .container {
+            background-color: var(--background-tertiary);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+                        0 10px 10px rgba(0,0,0,0.22);
+            position: relative;
+            overflow: hidden;
+            width: 800px;
+            max-width: 100%;
+            min-height: 480px;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+
+        @keyframes show {
+            0%, 49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+            
+            50%, 100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .container.right-panel-active .overlay-container{
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: var(--background-secondary);
+            background: -webkit-linear-gradient(to right, var(--background-secondary), #1a243a);
+            background: linear-gradient(to right, var(--background-secondary), #1a233a);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            color: var(--text-primary);
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        .social-container {
+            margin: 20px 0;
+        }
+
+        .social-container a {
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            height: 40px;
+            width: 40px;
+            color: whitesmoke;
+            background-color: var(--background-secondary);
+        }
+
+        .social-container a:hover {
+            background-color: var(--accent-primary);
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        #askAIButton {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.9rem 1.75rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--text-primary);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            box-shadow: 0 4px 20px rgba(74, 108, 255, 0.3);
+            font-weight: 600;
+            width: calc(100% - 3rem);
+            justify-content: center;
+            z-index: 5;
+            border: 1px solid var(--border-color);
+        }
+
+        #askAIButton:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 6px 24px rgba(74, 108, 255, 0.4);
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+        }
+
+        #askAIButton:active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #askAIButton i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        #askAIButton:hover i {
+            transform: rotate(15deg);
+        }
+
+        .message-image {
+            border-radius: 8px;
+        }
+
+        /* Responsive Styles */
+        @media only screen and (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .link-text {
+                display: none;
+            }
+            
+            .logo {
+                display: none;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: 60px;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .sidebar-header {
+                display: none;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                padding: 0;
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .sidebar-link {
+                padding: 0.5rem;
+                flex-direction: column;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+            }
+
+            .sidebar-link:hover,
+            .sidebar-link:active {
+                border-left: none;
+                border-bottom-color: var(--accent-primary);
+            }
+
+            .link-text {
+                font-size: 10px;
+                margin-left: 0;
+                display: block;
+            }
+
+            .content-container {
+                padding: 10px;
+                height: calc(100% - 60px);
+            }
+
+            .container {
+                min-height: 400px;
+            }
+
+            h1 {
+                font-size: 19px;
+            }
+
+            p {
+                font-size: 8.5px;
+            }
+
+            span {
+                font-size: 8.5px;
+                padding: 0;
+                margin: 0;
+            }
+
+            button {
+                font-size: 9px;
+                padding: 8px 30px;
+            }
+
+            input {
+                padding: 5px 5px;
+                margin: 9px 0;
+            }
+
+            .container {
+                width: 350px;
+                min-height: 330px;
+            }
+
+            p {
+                font-size: 10px;
+                line-height: 14px;
+                margin: 37px 0 30px;
+            }
+        }
+
+        @media only screen and (max-width: 400px) {
+            .container {
+                width: 100%;
+                min-height: 300px;
+            }
+
+            form {
+                padding: 0 20px;
+            }
+        }
+        .black{
+            color: #000;
+        }
+        #but{
+            
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar - Fixed Width -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <img src="img/CYPHERS (9).png" alt="logo" class="logo">
+            </div>
+            <div class="sidebar-menu">
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;" >Home</span>
+                </a>
+                <a href="#"  class="sidebar-link">
+                    <i class="fa-solid fa-comments"></i>
+                    <span class="link-text"   style="font-size: 0.9rem;">Chat</span>
+                <a href="#" id="chaat" class="sidebar-link">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;">Login</span>    
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-wallet"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;">Wallet</span>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;">About-us</span>
+                </a>
+            </div>
+            <a href="http://localhost:3000/">
+                <button id="askAIButton">
+                    <i class="fas fa-user-friends"></i>
+                    <span id="buttonText">P2P Chat</span>
+                </button>
+            </a>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content-container">
+            <div class="container" id="container">
+                <div class="form-container sign-up-container">
+                    <form action="/api/users/signup" method="POST">
+                        <h1 class="black">Create Account</h1>
+                        <div class="social-container">
+                            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                            <a href="/api/users/auth/google" class="social"><i class="fa-brands fa-google"></i></a>
+                            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                        <span class="black">or use your email for registration</span>
+                        <input type="text" name="name" placeholder="Name" required style="background-color: #373a50">
+                        <input type="email" name="email" placeholder="Email" required style="background-color: #373a50">
+                        <input type="password" name="password" placeholder="Password" required style="background-color: #373a50">
+                        <button class="button" id="but" type="submit">Sign Up</button>
+                        <div id="signup-message"></div>
+                    </form>
+                </div>
+                <div class="form-container sign-in-container">
+                    <form action="/api/users/login" method="POST">
+                        <h1 class="black">Sign in</h1>
+                        <div class="social-container">
+                            <a href="/api/auth/facebook" class="social"><i class="fab fa-facebook-f"></i></a>
+                            <a href="/api/users/auth/google" class="social"><i class="fa-brands fa-google"></i></a>
+                            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                        <span class="black">or use your account</span>
+                        <input id="loginEmail" type="email" name="email" placeholder="Email" required  style="background-color: #373a50">
+                        <input id="loginPassword" type="password" name="password" placeholder="Password" required style="background-color:#373a50">
+                        <a href="#">Forgot your password?</a>
+                        <button class="button" type="submit">Sign In</button>
+                        <div id="login-message"></div>
+                    </form>
+                </div>
+                <div class="overlay-container">
+                    <div class="overlay">
+                        <div class="overlay-panel overlay-left">
+                            <h1>Welcome Back!</h1>
+                            <p>To keep connected with us please login with your personal info</p>
+                            <button class="ghost" id="signIn">Sign In</button>
+                        </div>
+                        <div class="overlay-panel overlay-right">
+                            <h1>Hello, Friend!</h1>
+                            <p>Enter your personal details and start journey with us</p>
+                            <button class="ghost" id="signUp">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+
+        document.querySelector('form[action="/api/users/signup"]').addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            const name = document.querySelector('input[name="name"]').value.trim();
+            const email = document.querySelector('input[name="email"]').value.trim();
+            const password = document.querySelector('input[name="password"]').value.trim();
+            
+            const payload = { name, email, password };
+
+            try {
+                const response = await fetch('/api/users/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('signup-message').innerHTML = 
+                        `<span style="color: #4BB543; font-weight: bold;">Successfully Signed Up! You can now login.</span>`;
+                } else {
+                    document.getElementById('signup-message').innerHTML = 
+                        `<span style="color: #ff3333; font-weight: bold;">${result.message}</span>`;
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                document.getElementById('signup-message').innerHTML = 
+                    `<span style="color: #ff3333; font-weight: bold;">Something went wrong. Please try again.</span>`;
+            }
+        });
+
+        document.querySelector('form[action="/api/users/login"]').addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
+            
+            const payload = { email, password };
+            
+            try {
+                const response = await fetch('/api/users/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+                
+                const loginMessage = document.getElementById('login-message');
+                loginMessage.innerHTML = ''; 
+
+                if (response.ok) {
+                    localStorage.setItem('user', JSON.stringify(result));
+                    
+                    loginMessage.innerHTML = 
+                        `<span style="color: #4BB543; font-weight: bold;">Login successful! Redirecting...</span>`;
+                    setTimeout(() => {
+                        window.location.href = '/chat'; 
+                    }, 1000);
+                } else {
+                    loginMessage.innerHTML = 
+                        `<span style="color: #ff3333; font-weight: bold;">${result.message || 'Login failed. Please try again.'}</span>`;
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                document.getElementById('login-message').innerHTML = 
+                    `<span style="color: #ff3333; font-weight: bold;">Something went wrong. Please try again.</span>`;
+            }
+        });
+
+        // Handle social login success
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const userId = urlParams.get('userId');
+    
+    if (token && userId) {
+        // Store token and user ID
+        localStorage.setItem('user', JSON.stringify({
+            _id: userId,
+            token: token
+        }));
+        
+        // Redirect to chat page
+        window.location.href = '/chat';
+    }
+});
+
+// For popup window approach (alternative)
+document.getElementById('google-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    const googleAuthWindow = window.open(
+        '/api/auth/google',
+        'Google Login',
+        'width=500,height=600'
+    );
+    
+    // Listen for message from popup
+    window.addEventListener('message', (event) => {
+        if (event.origin !== window.location.origin) return;
+        
+        if (event.data.token) {
+            localStorage.setItem('user', JSON.stringify({
+                _id: event.data.userId,
+                token: event.data.token
+            }));
+            window.location.href = '/chat';
+        }
+    });
+});
+ 
+
+    </script>
+</body>
+</html>

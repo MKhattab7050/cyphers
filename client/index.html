@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" 
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.css" 
+    integrity="sha512-6p+GTq7fjTHD/sdFPWHaFoALKeWOU9f9MPBoPnvJEWBkGS4PKVVbCpMps6IXnTiXghFbxlgDE8QRHc3MU91lJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="output.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+      @media only screen and (min-width: 1450px) {
+  
+      #hero{
+
+       
+      width:1250px;
+      margin-left: 170px;
+      }
+
+      #mainp{
+        margin-top: 30px;
+      }
+      
+      #features{
+        width:1250px;
+        margin-left: 125px;
+        
+      }
+      #nav{
+        position: sticky;
+        
+        z-index: 1;
+        box-shadow: 0.5px 0.5px 7px  #e1e1e1;
+      }
+      #footer{
+        z-index: 1;
+      }
+      img{
+        margin-left: 35px;
+      }
+
+
+      
+::-webkit-scrollbar {
+  width: 10px; 
+  background-color: #464667; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #272d73; 
+  border-radius: 10px; 
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2c327a; }
+
+
+    }
+
+        
+    </style>
+
+    <title>Cyphers</title>
+</head>
+<body class="font-body">
+    <!--navbar-->
+<nav id="nav"
+  class="relative lg:px-30 lg:pr-10 xl:px-14  flex w-full flex-nowrap items-center justify-between bg-black py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
+  data-twe-navbar-ref>
+  
+  <div class="flex w-full flex-wrap items-center justify-between px-3">
+    <div class="ms-2">
+      <a class="text-xl text-black dark:text-white" href="index.html"><img src="img/Logo.png" alt="logo" width="150px"></a>
+    </div>
+    <!-- Hamburger button for mobile view -->
+    <button
+      class="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+      type="button"
+      data-twe-collapse-init
+      data-twe-target="#navbarSupportedContent2"
+      aria-controls="navbarSupportedContent2"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <!-- Hamburger icon -->
+      <span
+        class="[&>svg]:w-7 [&>svg]:stroke-black/50 dark:[&>svg]:stroke-neutral-200">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor">
+          <path
+            fill-rule="evenodd"
+            d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+            clip-rule="evenodd" />
+        </svg>
+      </span>
+    </button>
+
+    <!-- Collapsible navbar container -->
+    <div
+      class="!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
+      id="navbarSupportedContent2"
+      data-twe-collapse-item>
+      <!-- links -->
+             <a href="http://localhost:3000/" ><button style="font-size: 13.5px;" >p2p</button></a>
+      <ul
+        class="list-style-none  ms-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
+        data-twe-navbar-nav-ref>
+        <!-- Home link -->
+        <li
+          class="my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
+          data-twe-nav-item-ref>
+          <a
+            class="text-white dark:text-white text-sm md:text-lg lg:px-2"
+            aria-current="page"
+            href="index.html"
+            data-twe-nav-link-ref
+            >Home</a
+          >
+        </li>
+        <!-- Chat link -->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="chat.html"
+            data-twe-nav-link-ref
+            >Chat</a
+          >
+        </li>
+        <!--wallet-->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="wallet.html"
+            data-twe-nav-link-ref
+            >Wallet</a
+          >
+        </li>
+        <!-- App link -->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="#"
+            data-twe-nav-link-ref
+            >App</a
+          >
+        </li>
+        <!--About-->
+        <li
+          class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+          data-twe-nav-item-ref>
+          <a
+            class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
+            href="about.html"
+            data-twe-nav-link-ref
+            >About</a
+          >
+        </li>
+        
+        
+      </ul>
+      <span class="hidden lg:inline-block border-l border-white  h-7 mx-3 select-none"></span>
+      <div class="btns flex flex-col md:flex-row  gap-4">
+        <a href="login.html">
+          <button
+          type="button"
+          class=" flex w-fit rounded-full bg-black px-3 pb-2 pt-2.5 md:px-6 text-xs md:text-sm font-medium uppercase leading-normal text-white shadow-white-3 transition duration-200 ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 ">
+          <i class="ri-user-fill mr-1.5"></i>Login
+        </button>
+        </a>
+        
+            <button
+        type="button"
+        class=" flex w-fit rounded-full bg-white  px-3 pb-2 pt-2.5 md:px-6 text-xs md:text-sm font-medium uppercase leading-normal text-black shadow-white-3 transition duration-200 ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 focus:bg-white focus:shadow-white-2 ">
+        <i class="ri-download-line mr-1.5"></i>download app
+      </button>
+
+      </div>
+      
+    </div>
+  </div>
+</nav>
+
+    <!--Hero section-->
+   
+    <div class="relative min-h-[120vh] bg-gradient-to-b from-gray-900 via-black to-gray-800 overflow-hidden">
+      <!-- First Animated Wavy Line -->
+      <div class="absolute top-[25%] left-0 w-full h-full pointer-events-none">
+        <svg
+          class="absolute inset-x-0 top-[19%] animate-[moveWave_10s_linear_infinite]"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+          fill="none"
+        >
+          <path
+            fill="none"
+            stroke="rgba(128,90,213,0.5)"
+            stroke-width="2"
+            d="M0,160L40,170C80,180,160,200,240,213.3C320,227,400,245,480,229.3C560,213,640,171,720,170.7C800,171,880,213,
+            960,208C1040,203,1120,149,1200,133.3C1280,117,1360,139,1400,149L1440,160"
+          ></path>
+        </svg>
+      </div>
+    
+
+    <img src="img/line.png" class=" absolute top-[9.5%] right-[0%]  animate-[moveWave_10s_linear_infinite " id="float" alt="" width="100%">
+      <!-- Floating Animated Dots -->
+      <div class="absolute inset-0">
+        <!-- Small dots -->
+        <div
+          class="absolute top-[3%] left-[8%] w-3 h-3 bg-gray-400 rounded-full opacity-70 animate-[float_6s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute top-32 right-20 w-3 h-3 bg-gray-500 rounded-full opacity-80 animate-[floatReverse_8s_ease-in-out_infinite]"
+        ></div>
+    
+        <!-- Additional dots -->
+        <div
+          class="absolute top-[48%] left-1/3 w-4 h-4 bg-purple-400 rounded-full opacity-70 animate-[float_5s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute top-[30%] right-1/4 w-2 h-2 bg-purple-300 rounded-full opacity-60 animate-[floatReverse_7s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute top-[10%] left-[60%] w-3 h-3 bg-blue-500 rounded-full opacity-80 animate-[float_6s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute top-[34%] right-[40%] w-4 h-4 bg-purple-500 rounded-full opacity-90 animate-[float_9s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute top-[50%] left-[85%] w-3 h-3 bg-blue-500 rounded-full opacity-70 animate-[float_11s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute top-[35%] right-[90%] w-2 h-2 bg-gray-300 rounded-full opacity-50 animate-[floatReverse_12s_ease-in-out_infinite]"
+        ></div>
+      </div>
+    
+      <!-- Content -->
+   <!--Hero section-->
+   <section id="hero" class="h-[550px] md:h-[600px] md:pt-12" >
+    <div class="hero-text container mx-auto mt-5 custom-range:pl-10 space-x-5 flex flex-col md:flex-row " >
+      <div class="  max-sm:py-5 md:w-1/2   flex flex-col space-y-4 justify-center">
+      <h1 class=" md:w-fit text-center md:text-left  text-white text-2xl md:text-4xl lg:text-5xl font-bold ">Chat <span style="color: #763BEC;">privatly!</span> </h1>
+      <p class="  text-center md:text-left text-white text-lg md:text-xl  lg:text-3xl">Cyphers is a community 
+        designed to make every conversation enjoyable & secure.</p>
+      <a href="chat.html"><button
+      type="button"
+      class=" chat-btn max-sm:hidden md:flex w-fit rounded-full bg-white  px-2 py-2 md:px-4 text-xs md:text-base font-medium uppercase  text-black shadow-white-3 transition duration-200  ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 ">
+      <i class="ri-chat-1-fill mr-1.5"></i>start chatting
+    </button></a>
+    </div>
+      <div class="img max-sm:pb-5 md:w-1/2 flex justify-center   ">
+        <img src="img/chat.png" class=" w-80 md:w-96  "   alt=""  >
+    </div>
+      <button
+      type="button"
+      class="md:hidden flex justify-center self-center  w-fit rounded-full bg-white  px-2 py-2 md:px-4 text-xs md:text-base font-medium uppercase leading-normal text-black shadow-white-3 transition duration-200 ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 focus:bg-white focus:shadow-white-2 ">
+      <i class="ri-chat-1-fill mr-1.5"></i>start chatting
+    </button>
+  </section>
+    
+      <!--Hero section-->
+      <section id="hero" class="h-[650px] md:h-[650px] md:pt-32" style="margin: bottom 10px; " >
+        <div class="hero-text container mx-auto mt-5 custom-range:pl-10 space-x-5 flex flex-col md:flex-row " >
+          <div class="  max-sm:py-5 md:w-1/2   flex flex-col space-y-4 justify-center">
+          <h1 class=" md:w-fit text-center md:text-left  text-white text-2xl md:text-4xl lg:text-5xl font-bold "><span  style="color: #763BEC;">Sending Money!</span> </h1>
+          <p class="  text-center md:text-left text-white text-lg md:text-xl  lg:text-3xl">Send and receive cryptocurrency to and from anywhere in the world.</p>
+          <a href="wallet.html"><button
+          type="button"
+          class=" chat-btn max-sm:hidden md:flex w-fit rounded-full bg-white  px-2 py-2 md:px-4 text-xs md:text-base font-medium uppercase  text-black shadow-white-3 transition duration-200  ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 ">
+          <i class="fa-solid fa-wallet mr-2 mt-1"></i>Crypto Wallet
+        </button></a>
+        </div>
+          <div class="img max-sm:pb-5 md:w-1/2 flex justify-center   ">
+            <img  src="img/wallet.png" class=" w-80 md:w-96"  alt=""  >
+        </div>
+          <button 
+          type="button"
+          class="md:hidden flex justify-center self-center  w-fit rounded-full bg-white  px-2 py-2 md:px-4 text-xs md:text-base font-medium uppercase leading-normal text-black shadow-white-3 transition duration-200 ease-in-out hover:bg-white hover:text-black hover:shadow-white-2 hover:scale-105 focus:bg-white focus:shadow-white-2 ">
+          <i class="ri-wallet-3-fill text-xl"></i>Crypto WAllet
+        </button>
+      </section>
+      
+
+
+    <!--features section-->
+    <section  id="mainp" class=" pt-12 pb-20 " style="background-image: url(img/bgb\ \(3\).png);
+    background-size: cover; background-repeat: no-repeat;" >
+      <div class="ml-1" >
+        <div class="features-text max-sm:p-4 ml-6 flex flex-col items-center text-center   ">
+          <h1 class="text-white text-2xl md:text-5xl font-bold mb-8 ms-auto me-auto" >Why Cyphers?</h1>
+          <p class="text-white text-lg md:text-xl font-bold ms-auto me-auto">We offer various features for chatting safley 
+            & and exchanging data with P2P without feeling that your data is seen.</p>
+        </div>
+        <div id="features" class="flex items-center justify-center  ">
+           <!--cols configurations-->
+          <div class="features grid grid-cols-1 md:grid-cols-3 md:mx-36 lg:mx-20 p-4">
+           <!--encryption-->
+            <div class=" encryption p-4 ms-auto me-auto mt-14 text-center  ">
+              <div class="bg-blue-900 rounded-full  p-4 w-16   ms-auto me-auto">
+                <img  src="img/encryption.png" alt="" width="50px" class="ms-auto me-auto  ">
+              </div>
+              <h1 class="text-white text-lg md:text-xl font-bold py-5">End-to-End Encryption</h1>
+              <p class="text-white text-opacity-65 text-base md:text-lg font-bold ms-auto me-auto ">
+                Ensures only the sender and receiver can read the messages &
+                Prevents interception by third parties during transmission.</p>
+              
+            </div>
+            <!--cross platform-->
+            <div class=" cross p-4 mx-40 mt-14  text-center ms-auto me-auto">
+              <div class="bg-blue-900 rounded-full  p-4 w-16   ms-auto me-auto">
+                <img src="/dist/images/cross.png" alt="" width="60px" class="ms-auto me-auto  ">
+              </div>
+              <h1 class="text-white text-lg md:text-xl font-bold py-5">Cross platform</h1>
+              <p class="text-white text-opacity-65 text-base md:text-xl font-bold ms-auto me-auto "">
+                Can be used on desktop as an app & and web on phones and tablet
+              </p>
+            
+            </div>
+            <!--video -->
+            <div class=" video p-4 mx-40 mt-14  text-center ms-auto me-auto">
+              <div class="bg-blue-900 rounded-full  p-4 w-16   ms-auto me-auto">
+                <img src="/dist/images/video-camera (1).png" alt="" width="50px" class="ms-auto me-auto  ">
+              </div>
+              <h1 class="text-white text-lg md:text-xl font-bold py-5">Video calls              </h1>
+              <p class="text-white text-opacity-65 text-base md:text-xl font-bold ms-auto me-auto ">
+                allows users to engage in real-time, face-to-face communication without relying on centralized servers.
+              </p>
+            
+            </div>
+
+              <!--Nat-->            
+              <div class=" nat p-4 mx-40 mt-14  text-center ms-auto me-auto">
+                <div class="bg-blue-900 rounded-full  p-4 w-16   ms-auto me-auto">
+                  <img src="/dist/images/bubble-speech (1).png" alt="" width="50px" class="ms-auto me-auto  ">
+                </div>
+                <h1 class="text-white text-lg md:text-xl font-bold py-5">
+                  Peer Discovery and NAT</h1>
+                <p class="text-white text-opacity-65 text-base md:text-xl font-bold ms-auto me-auto "">
+                  Uses technologies like STUN (Session Traversal Utilities for NAT) 
+                  and TURN (Traversal Using Relays around NAT)
+                </p>
+              
+              </div>
+
+              <!--screen share-->
+              <div class=" screen p-4 mx-40 mt-14  text-center ms-auto me-auto">
+                <div class="bg-blue-900 rounded-full  p-4 w-16   ms-auto me-auto">
+                  <img src="/dist/images/share (1).png" alt="" width="50px" class="ms-auto me-auto  ">
+                </div>
+                <h1 class="text-white text-lg md:text-xl font-bold py-5">
+                  Screen Sharing</h1>
+                <p class="text-white text-opacity-65 text-base md:text-xl font-bold ms-auto me-auto "">
+                  Adds functionality for collaboration, 
+                  especially in professional or educational contexts.
+                </p>
+              
+              </div>
+
+              <!--file transfer-->
+              <div class=" file p-4 mx-40 mt-14  text-center ms-auto me-auto">
+                <div class="bg-blue-900 rounded-full  p-4 w-16   ms-auto me-auto">
+                  <img src="/dist/images/transfer (1).png" alt="" width="50px" class="ms-auto me-auto  ">
+                </div>
+                <h1 class="text-white text-lg md:text-xl font-bold py-5">
+                  File Transfer</h1>
+                <p class="text-white text-opacity-65 text-base md:text-xl font-bold ms-auto me-auto "">
+                  Files are sent directly between peers without size restrictions imposed by servers.
+                </p>
+              
+              </div>
+      </div>
+      
+  </div>
+      
+      </div>
+      </div>
+    </section>
+ 
+
+
+
+
+<footer class="bg-gray-950 text-gray-400 py-8 border-t border-gray-800">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+      <!-- Logo and Name -->
+      <div class="flex items-center space-x-2">
+        <img src="img/Logo.png" alt="Logo" class="h-[50px]">
+
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+        <a href="#" class="hover:text-white transition">Terms Of Service</a>
+        <a href="#" class="hover:text-white transition">Privacy Policy</a>
+        <a href="#" class="hover:text-white transition">Community Guidelines</a>
+        <a href="#" class="hover:text-white transition">Refund Policy</a>
+      </div>
+
+      <!-- Social Icons -->
+        <div class="flex space-x-4 pt-2">
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-discord text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-github text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300 hover:scale-110">
+            <i class="fab fa-telegram text-xl"></i>
+          </a>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-gray-800 mt-8 pt-4 text-center text-sm text-gray-500">
+      All rights reserved. <span class="text-white font-semibold">Cyphers.</span>
+    </div>
+  </div>
+</footer>
+
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+
+    
+
+
+
+
+
+
+ 
+    
+
+<style>
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes floatReverse {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+}
+</style>
+   
+
+
+
+
+
+
+
+
+
+  
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!--scroll reveal-->
+<script src="scrollreveal.min.js"></script>
+<!--main js-->
+<script src="main.js"></script>
+    <script
+  type="text/javascript"
+  src="../node_modules/tw-elements/js/tw-elements.umd.min.js"></script>
+</body>
+</html>

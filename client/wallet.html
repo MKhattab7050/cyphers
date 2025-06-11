@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.css"
+        integrity="sha512-6p+GTq7fjTHD/sdFPWHaFoALKeWOU9f9MPBoPnvJEWBkGS4PKVVbCpMps6IXnTiXghFbxlgDE8QRHc3MU91lJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Wallet</title>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            dark: {
+              primary: '#0f172a',
+              secondary: '#1f1f1e',
+              card: 'rgba(31, 31, 30, 0.9)',
+              input: 'rgba(30, 41, 59, 0.8)',
+            },
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    #output::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    #output::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+
+    #output::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 10px;
+    }
+    
+    /* New styles for sidebar and content layout */
+    .sidebar-content-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+        .sidebar {
+            background-color: #1a2035;
+            backdrop-filter: blur(8px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 50;
+            width: 18%; 
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0; /* Prevent shrinking */
+            
+        }
+
+        .sidebar-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 9rem;
+        }
+
+        .sidebar-menu {
+            padding-top: 0.3rem;
+            padding-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0.85rem 0.8rem;
+            color: #94a3b8;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+            text-decoration: none;
+            
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link:active {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-left-color: var(--accent-primary);
+        }
+        #chaat{
+        background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-left-color: var(--accent-primary);
+        }
+        .words:hover {
+    box-shadow: 0 8px 8px #4a6bff96, 
+                0 0 8px #6b7affa0;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+        .sidebar-link i {
+            font-size: 1.3rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .link-text {
+            margin-left: 0.75rem;
+        }
+    
+    @media (min-width: 1024px) {
+      .sidebar {
+        width: 250px;
+      }
+    }
+    
+    .main-content {
+      flex-grow: 1;
+      max-width: 900px; /* Reduced width */
+      margin-left: 20px; /* Added margin to the left */
+      margin-right: 20px; /* Added margin to the right */
+    }
+  </style>
+</head>
+<body class="font-poppins bg-dark-primary bg-[url('img/B.jpg')] bg-cover bg-fixed text-white min-h-screen">
+
+  <div class="sidebar-content-container">
+    <!-- Sidebar -->
+    <div class="sidebar bg-dark-primary/80 backdrop-blur border-r border-white/10 z-50" style="width: 17.5%; ">
+      <div class="sidebar-header p-5 border-b border-white/10 hidden lg:block">
+        <img src="img/Logo.png" alt="logo" class="w-36 mx-auto">
+      </div>
+            <div class="sidebar-menu">
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;" >Home</span>
+                </a>
+                <a href="#"  class="sidebar-link">
+                    <i class="fa-solid fa-comments"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;">Chat</span>
+                <a href="#"  class="sidebar-link">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;">Login</span>    
+                <a href="#" id="chaat" class="sidebar-link">
+                    <i class="fas fa-wallet"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;">Wallet</span>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span class="link-text"  style="font-size: 0.9rem;">About-us</span>
+                </a>
+            </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="con" class="main-content p-2 lg:max-w-[1400px]">
+      <div class="bg-dark-secondary rounded-lg shadow shadow-white/20  sm:p-8 mt-[22.5px] w-full max-w-xl lg:max-w-[1100px] mx-auto">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <!-- First Column -->
+          <div class="space-y-[36px]">
+            <div id="wallet" class="space-y-[36px]">
+              <button id="createWallet" class="mx-auto block bg-blue-500 text-white px-5 py-2 my-2 rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                Create Wallet
+              </button>
+
+              <form id="importForm" class="my-8 space-y-[20px] ">
+                <textarea id="privateKey" placeholder="Enter Private Key" rows="2"
+                          class="block mx-auto w-full max-w-xs lg:max-w-[400px] p-3 my-5 bg-dark-input text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <button type="submit" class="mx-auto block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300 lg:mb-6">
+                  Import Wallet
+                </button>
+              </form>
+            </div>
+
+            <!-- Get Balance Section -->
+            <div id="getBalance" class="space-y-[15px] pt-1 ">
+                              <div id="balanceOutput" class=" text-center"></div>
+              <h2 class="text-center text-xl font-semibold">Get Wallet Balance</h2>
+              <form id="getBalanceForm" class="space-y-[22px] ">
+                <textarea id="balanceWalletAddress" placeholder="Enter Wallet Address" rows="2"
+                          class="block mx-auto w-full max-w-xs lg:max-w-[400px] p-3 bg-dark-input text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <textarea id="balanceTokenAddress" placeholder="Enter Token Address" rows="2"
+                          class="block mx-auto w-full max-w-xs lg:max-w-[400px] p-3 bg-dark-input text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <div class="grid grid-cols-2 gap-4 max-w-xs mx-auto ">
+                  <button onclick="writeInInp()" type="button" class="flex items-center justify-center bg-white p-2 rounded-lg hover:bg-blue-100 transition-colors duration-300">
+                    <img src="img/tether-usdt-logo.png" width="30px" alt="USDT">
+                  </button>
+                  <button onclick="writeInIn()" type="button" class="flex items-center justify-center bg-white p-2 rounded-lg hover:bg-blue-100 transition-colors duration-300  ">
+                    <img src="img/usd-coin-usdc-logo.png" width="30px" alt="USDC">
+                  </button>
+                </div class="">
+                <button type="submit" class="mx-auto block bg-blue-500 text-white px-4 py-2  rounded-lg hover:bg-blue-600 transition-colors duration-300 ">
+                  Get Balance
+                </button>
+
+              </form>
+
+            </div>
+          </div>
+
+          <!-- Second Column -->
+          <div class="space-y-[13px]">
+            <div id="screen" class="w-[90%] sm:max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl h-36 lg:h-[195px] bg-black rounded-lg shadow-lg border border-gray-300 mx-auto overflow-hidden">
+              <div id="output" class="text-white text-[15.5] p-4 h-full overflow-y-auto break-words"></div>
+            </div>
+
+            <div id="sendTokens" class="space-y-[14px]">
+              <h2 class="text-center text-xl font-semibold">Send Tokens</h2>
+              <form id="sendTokensForm" class="space-y-4">
+                <input type="text" id="sendPrivateKey" placeholder="Private Key"
+                class="block mx-auto w-full max-w-xs lg:max-w-[440px] p-3 bg-dark-input text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                <input type="text" id="tokenAddress" placeholder="Token Address"
+                class="block mx-auto w-full max-w-xs lg:max-w-[440px] p-3 bg-dark-input text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                <div class="grid grid-cols-2 gap-4 max-w-xs mx-auto">
+                  <button onclick="writeInInput()" type="button" class="flex items-center justify-center bg-white p-2 rounded-lg hover:bg-blue-100 transition-colors duration-300">
+                    <img src="img/tether-usdt-logo.png" width="30px" alt="USDT">
+                  </button>
+                  <button onclick="writeInInpu()" type="button" class="flex items-center justify-center bg-white p-2 rounded-lg hover:bg-blue-100 transition-colors duration-300">
+                    <img src="img/usd-coin-usdc-logo.png" width="30px" alt="USDC">
+                  </button>
+                </div>
+                <input type="text" id="recipient" placeholder="Recipient Address"
+                       class="block mx-auto w-full max-w-xs lg:max-w-[440px] p-3 bg-dark-input text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                <input type="number" id="amount" placeholder="Amount" step="0.1" min="0"
+                       class="block mx-auto w-full max-w-xs lg:max-w-[440px] p-3 bg-dark-input text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                <button type="submit" class="mx-auto flex items-center justify-center bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600 transition-colors duration-300">
+                  Send Tokens
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function writeInInput() {
+      document.getElementById('tokenAddress').value = '0x55d398326f99059fF775485246999027B3197955';
+    }
+    function writeInInpu() {
+      document.getElementById('tokenAddress').value = '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d';
+    }
+    function writeInInp() {
+      document.getElementById('balanceTokenAddress').value = '0x55d398326f99059fF775485246999027B3197955';
+    }
+    function writeInIn() {
+      document.getElementById('balanceTokenAddress').value = '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d';
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
