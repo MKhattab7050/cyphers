@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        #response {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            min-height: 100px;
+        }
+        button {
+            background: #4a6cff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #3a5bd9;
+        }
+        .loading {
+            color: #ffc107;
+        }
+        .error {
+            color: #ff5a5a;
+        }
+        .success {
+            color: #4ade80;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #16213e;
+            border: 1px solid #4a6cff;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 AI Assistant Test</h1>
+    <p>Test the AI integration before using it in chat</p>
+    
+    <input type="text" id="question" placeholder="Ask me anything..." value="Hello, who are you?">
+    <button onclick="testAI()">Test AI</button>
+    
+    <div id="response">
+        <p>Response will appear here...</p>
+    </div>
+
+    <script>
+async function testAI() {
+ const output = document.getElementById('response');
+ output.textContent = 'Calling AI...';
+ try {
+  const response = await fetch('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', content: document.getElementById('question').value }] }) });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || data.message || 'Request failed');
+  output.textContent = data.reply;
+ } catch (error) { output.textContent = error.message + ' — Open /chat first to start a session.'; }
+}
+</script>
+</body>
+</html>

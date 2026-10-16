@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+const userController = require('../Controllers/userController');
 const requireAuth = require('../middleware/requireAuth');
 
 // Authentication routes
 router.post('/signup', userController.registerUser);
+router.post('/guest', userController.guestUser);
 router.post('/login', userController.loginUser);
 
 // Profile route (protected)
 router.get('/profile', requireAuth, userController.getProfile);
 
 // User routes
-router.get('/:userId', userController.findUser);
-router.get('/', userController.getAllUsers);
+router.get('/:userId', requireAuth, userController.findUser);
+router.get('/', requireAuth, userController.getAllUsers);
 
 // Google OAuth routes
 router.get('/auth/google', userController.authGoogle);

@@ -54,7 +54,7 @@ router.post("/test-decimals", async (req, res) => {
   try {
     const tokenContract = new ethers.Contract(tokenAddress, tokenABI, provider);
     const decimals = await tokenContract.decimals();
-    res.json({ decimals });
+    res.json({ decimals: Number(decimals) });
   } catch (error) {
     res.status(500).json({ error: "Could not fetch decimals. Check the token address." });
   }
@@ -70,12 +70,7 @@ router.post("/send-tokens", async (req, res) => {
     const tokenContract = new ethers.Contract(tokenAddress, tokenABI, wallet);
 
     // الحصول على عدد الـ decimals
-    let decimals = 18; // القيمة الافتراضية
-    try {
-      decimals = await tokenContract.decimals();
-    } catch (error) {
-      console.warn("Using default decimals (18) due to error:", error.message);
-    }
+    const decimals = await tokenContract.decimals();
 
     // تحويل المبلغ إلى أصغر وحدة
     const value = ethers.parseUnits(amount.toString(), decimals);
@@ -104,13 +99,7 @@ router.post("/get-balance", async (req, res) => {
       const balance = await tokenContract.balanceOf(walletAddress);
   
       // تحويل الرصيد إلى تنسيق قابل للقراءة (بناءً على عدد الـ decimals)
-      let decimals = 18; // القيمة الافتراضية
-      try {
-        decimals = await tokenContract.decimals();
-      } catch (error) {
-        console.warn("Using default decimals (18) due to error:", error.message);
-      }
-      
+      const decimals = await tokenContract.decimals();
       const readableBalance = ethers.formatUnits(balance, decimals);
   
       res.json({ balance: readableBalance });

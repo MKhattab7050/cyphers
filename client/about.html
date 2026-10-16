@@ -203,7 +203,7 @@
 <body class="font-body">
     <!--navbar-->
 <nav id="nav"
-  class="relative lg:px-30 lg:pr-10 xl:px-14  flex w-full flex-nowrap items-center justify-between bg-black py-2 text-neutral-500 shadow-dark-mild hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
+  class="relative lg:px-30 lg:pr-10 xl:px-14  flex w-full flex-nowrap items-center justify-between bg-black py-2 text-neutral-500 shadow-dark-mild focus:text-neutral-700 dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
   data-twe-navbar-ref>
   
   <div class="flex w-full flex-wrap items-center justify-between px-3">
@@ -278,16 +278,23 @@
             >Wallet</a
           >
         </li>
-        <!-- App link -->
+        <!-- p2p link -->
         <li
           class="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
           data-twe-nav-item-ref>
-          <a
+          <a id="p2p-link"
             class="p-0 text-white/50 text-sm md:text-lg transition duration-200 hover:text-white hover:ease-in-out focus:text-white/80 active:text-white/80 motion-reduce:transition-none lg:px-2"
             href="#"
             data-twe-nav-link-ref
-            >App</a
+            >p2p</a
           >
+          <script>
+          const hostname = window.location.hostname;
+          const port = 3000;
+          const link = `http://${hostname}:${port}/`;
+
+          document.getElementById("p2p-link").setAttribute("href", link);
+        </script>
         </li>
         <!--About-->
         <li
@@ -562,8 +569,5 @@
 <script src="scrollreveal.min.js"></script>
 <!--main js-->
 <script src="main.js"></script>
-<script
-  type="text/javascript"
-  src="../node_modules/tw-elements/js/tw-elements.umd.min.js"></script>
 </body>
 </html>

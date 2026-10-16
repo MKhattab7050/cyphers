@@ -1,29 +1,25 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const db = require('../config/db'); // تأكد من المسار الصحيح
+const db = require('../dbp'); // تأكد من المسار الصحيح
 require('dotenv').config();
 
 // إنشاء JWT Token
-const createToken = (userId) => {
-  return jwt.sign(
-    { userId }, 
-    process.env.JWT_SECRET_KEY, 
-    { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
-  );
-};
+const { createToken } = require('./auth');
+const googleEnabled = Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
 
 // Google Strategy
-passport.use(new GoogleStrategy({
+if (googleEnabled) passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: process.env.GOOGLE_CALLBACK_URL
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+    if (!profile.emails?.[0]?.value) return done(new Error('Google account has no email'));
     // البحث عن المستخدم أولاً
     const [existingUser] = await db.execute(
       'SELECT * FROM users WHERE google_id = ? OR email = ?', 
-      [profile.id, profile.emails[0].value]
+      [profile.id, profile.emails?.[0]?.value]
     );
 
     if (existingUser.length > 0) {
@@ -34,12 +30,16 @@ passport.use(new GoogleStrategy({
           [profile.id, existingUser[0].id]
         );
       }
+      if (!existingUser[0].username) {
+        existingUser[0].username = 'Google-' + profile.id;
+        await db.execute('UPDATE users SET username = ? WHERE id = ?', [existingUser[0].username, existingUser[0].id]);
+      }
       return done(null, existingUser[0]);
     }
 
     // إنشاء مستخدم جديد
     const [result] = await db.execute(
-      'INSERT INTO users (name, email, google_id, created_at) VALUES (?, ?, ?, NOW())',
+      'INSERT INTO users (name, email, google_id, username, created_at) VALUES (?, ?, ?, ?, NOW())',
       [
         profile.displayName,
         profile.emails[0].value,
@@ -51,6 +51,7 @@ passport.use(new GoogleStrategy({
       id: result.insertId,
       name: profile.displayName,
       email: profile.emails[0].value,
+      username: 'Google-' + profile.id,
       google_id: profile.id
     };
 
@@ -75,4 +76,4 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-module.exports = { passport, createToken }; 
+module.exports = { passport, createToken, googleEnabled }; 

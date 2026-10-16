@@ -1,46 +1,52 @@
-const db = require('../db');
+const db = require('../config/db');
 
 class MessageModel {
     
     // حفظ رسالة جديدة
-    static async saveMessage(messageData) {
-        try {
-            const sql = `
-                INSERT INTO messages 
-                (username, room, text, type, file_id, replyTo, timestamp, mediaUrl, mediaType, replyToUsername, replyToText)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            `;
-            
-            // تحضير البيانات
-            const params = [
-                messageData.username,
-                messageData.room,
-                messageData.text || null,
-                messageData.type || 'text',
-                messageData.file_id || null,
-                messageData.replyTo ? (typeof messageData.replyTo === 'string' ? messageData.replyTo : JSON.stringify(messageData.replyTo)) : null,
-                messageData.timestamp || new Date(),
-                messageData.mediaUrl || null,
-                messageData.mediaType || null,
-                messageData.replyToUsername || null,
-                messageData.replyToText || null
-            ];
+static async saveMessage(messageData) {
+    try {
+        // ✅ تأكد من وجود المستخدم في جدول users
+        await db.query("INSERT IGNORE INTO users (username) VALUES (?)", [messageData.username]);
 
-            const result = await db.query(sql, params);
-            
-            return {
-                insertId: result.insertId || result[0]?.insertId,
-                affectedRows: result.affectedRows || result[0]?.affectedRows,
-                ...messageData
-            };
-        } catch (error) {
-            console.error('Error in MessageModel.saveMessage:', error);
-            throw error;
-        }
+        const isPrivateMessage = messageData.room && messageData.room.startsWith('private ');
+
+        const sql = `
+            INSERT INTO messages 
+            (username, room, text, type, file_id, replyTo, timestamp, mediaUrl, mediaType, replyToUsername, replyToText, is_private)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        
+        const params = [
+            messageData.username,
+            messageData.room,
+            messageData.text || null,
+            messageData.type || 'text',
+            messageData.file_id || null,
+            messageData.replyTo ? (typeof messageData.replyTo === 'string' ? messageData.replyTo : JSON.stringify(messageData.replyTo)) : null,
+            messageData.timestamp || new Date(),
+            messageData.mediaUrl || null,
+            messageData.mediaType || null,
+            messageData.replyToUsername || null,
+            messageData.replyToText || null,
+            isPrivateMessage ? 1 : 0
+        ];
+
+        const result = await db.query(sql, params);
+
+        return {
+            insertId: result.insertId || result[0]?.insertId,
+            affectedRows: result.affectedRows || result[0]?.affectedRows,
+            ...messageData
+        };
+    } catch (error) {
+        console.error('Error in MessageModel.saveMessage:', error);
+        throw error;
     }
+}
 
-    // استرجاع الرسائل حسب الغرفة
-    static async getMessagesByRoom(room, limit = 50) {
+
+    // استرجاع الرسائل حسب الغرفة (بدون الرسائل الخاصة)
+    static async getMessagesByRoom(room, limit = 1000) {
         try {
             const sql = `
                 SELECT 
@@ -57,15 +63,15 @@ class MessageModel {
                     replyToUsername,
                     replyToText
                 FROM messages 
-                WHERE room = ? 
-                ORDER BY timestamp ASC 
+                WHERE room = ? AND (is_private = 0 OR is_private IS NULL)
+                ORDER BY timestamp DESC, id DESC 
                 LIMIT ?
             `;
             
             const messages = await db.query(sql, [room, limit]);
             
             // تحويل replyTo من JSON string إلى object إذا لزم الأمر
-            return messages.map(message => {
+            return messages.reverse().map(message => {
                 if (message.replyTo && typeof message.replyTo === 'string') {
                     try {
                         message.replyTo = JSON.parse(message.replyTo);
@@ -77,6 +83,51 @@ class MessageModel {
             });
         } catch (error) {
             console.error('Error in MessageModel.getMessagesByRoom:', error);
+            throw error;
+        }
+    }
+
+    // استرجاع الرسائل الخاصة بين مستخدمين
+    static async getPrivateMessages(user1, user2, limit = 1000) {
+        try {
+            const encodedRoom = 'private ' + [user1, user2].sort().map(user => encodeURIComponent(user).replaceAll('_', '%5F')).join('_');
+            const privateRoom1 = `private ${user1}_${user2}`;
+            const privateRoom2 = `private ${user2}_${user1}`;
+            
+            const sql = `
+                SELECT 
+                    id,
+                    username,
+                    room,
+                    text,
+                    type,
+                    file_id,
+                    replyTo,
+                    timestamp,
+                    mediaUrl,
+                    mediaType,
+                    replyToUsername,
+                    replyToText
+                FROM messages 
+                WHERE (room = ? OR room = ? OR room = ?) AND is_private = 1
+                ORDER BY timestamp DESC, id DESC 
+                LIMIT ?
+            `;
+            
+            const messages = await db.query(sql, [privateRoom1, privateRoom2, encodedRoom, limit]);
+            
+            return messages.reverse().map(message => {
+                if (message.replyTo && typeof message.replyTo === 'string') {
+                    try {
+                        message.replyTo = JSON.parse(message.replyTo);
+                    } catch (e) {
+                        console.warn('Failed to parse replyTo JSON:', e);
+                    }
+                }
+                return message;
+            });
+        } catch (error) {
+            console.error('Error in MessageModel.getPrivateMessages:', error);
             throw error;
         }
     }
@@ -139,8 +190,8 @@ class MessageModel {
         }
     }
 
-    // البحث في الرسائل
-    static async searchMessages(room, searchTerm, limit = 20) {
+    // البحث في الرسائل (بدون الرسائل الخاصة)
+    static async searchMessages(room, searchTerm, limit = 50) {
         try {
             const sql = `
                 SELECT 
@@ -157,7 +208,8 @@ class MessageModel {
                     replyToUsername,
                     replyToText
                 FROM messages 
-                WHERE room = ? AND (text LIKE ? OR username LIKE ?)
+                WHERE room = ? AND (text LIKE ? OR username LIKE ?) 
+                AND (is_private = 0 OR is_private IS NULL)
                 ORDER BY timestamp DESC 
                 LIMIT ?
             `;
@@ -165,7 +217,7 @@ class MessageModel {
             const searchPattern = `%${searchTerm}%`;
             const messages = await db.query(sql, [room, searchPattern, searchPattern, limit]);
             
-            return messages.map(message => {
+            return messages.reverse().map(message => {
                 if (message.replyTo && typeof message.replyTo === 'string') {
                     try {
                         message.replyTo = JSON.parse(message.replyTo);
@@ -181,7 +233,7 @@ class MessageModel {
         }
     }
 
-    // احصائيات الرسائل للغرفة
+    // احصائيات الرسائل للغرفة (بدون الرسائل الخاصة)
     static async getMessageStats(room) {
         try {
             const sql = `
@@ -192,7 +244,7 @@ class MessageModel {
                     MIN(timestamp) as first_message,
                     MAX(timestamp) as last_message
                 FROM messages 
-                WHERE room = ?
+                WHERE room = ? AND (is_private = 0 OR is_private IS NULL)
             `;
             
             const stats = await db.query(sql, [room]);
@@ -228,21 +280,6 @@ class MessageModel {
             return stats[0] || {};
         } catch (error) {
             console.error('Error in MessageModel.getUserMessageStats:', error);
-            throw error;
-        }
-    }
-
-    // تنظيف الرسائل القديمة
-    static async cleanupOldMessages(daysOld = 30) {
-        try {
-            const sql = 'DELETE FROM messages WHERE timestamp < DATE_SUB(NOW(), INTERVAL ? DAY)';
-            const result = await db.query(sql, [daysOld]);
-            
-            return {
-                deletedCount: result.affectedRows || result[0]?.affectedRows || 0
-            };
-        } catch (error) {
-            console.error('Error in MessageModel.cleanupOldMessages:', error);
             throw error;
         }
     }

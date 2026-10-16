@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Typing Indicators - Cyphers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .test-section {
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .test-section h2 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+        }
+
+        .test-description {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-description p {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .test-description strong {
+            color: #667eea;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .typing-indicator-demo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typingDot 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .test-button {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .test-button:active {
+            transform: translateY(0);
+        }
+
+        .status-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .status-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #bbdefb;
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            color: #555;
+        }
+
+        .status-value {
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #4caf50 !important;
+        }
+
+        .warning {
+            color: #ff9800 !important;
+        }
+
+        .error {
+            color: #f44336 !important;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ffc107;
+            margin-top: 20px;
+        }
+
+        .instructions h3 {
+            color: #f57c00;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .instructions ol {
+            margin-right: 20px;
+        }
+
+        .instructions li {
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 اختبار Typing Indicators</h1>
+        <p class="subtitle">اختبر ميزة مؤشرات الكتابة في تطبيق Cyphers</p>
+
+        <!-- Test 1: Basic User Typing -->
+        <div class="test-section">
+            <h2><span class="emoji">👤</span> اختبار 1: مؤشر كتابة المستخدم</h2>
+            <div class="test-description">
+                <p><strong>الهدف:</strong> التحقق من ظهور مؤشر الكتابة عندما يكتب مستخدم آخر</p>
+                <p><strong>كيفية الاختبار:</strong></p>
+                <ol>
+                    <li>افتح نافذتين من المتصفح</li>
+                    <li>سجل دخول بمستخدم مختلف في كل نافذة</li>
+                    <li>ادخل لنفس الغرفة (مثلاً General)</li>
+                    <li>ابدأ الكتابة في النافذة الأولى</li>
+                    <li>لاحظ ظهور "User1 is typing..." في النافذة الثانية</li>
+                </ol>
+            </div>
+
+            <div class="demo-box">
+                <h4>مثال المؤشر:</h4>
+                <div class="typing-indicator-demo">
+                    <span>Ahmed is typing...</span>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Multiple Users Typing -->
+        <div class="test-section">
+            <h2><span class="emoji">👥</span> اختبار 2: عدة مستخدمين يكتبون</h2>
+            <div class="test-description">
+                <p><strong>الهدف:</strong> التحقق من عرض أسماء متعددين عند الكتابة في نفس الوقت</p>
+                <p><strong>النتيجة المتوقعة:</strong></p>
+                <ul>
+                    <li>مستخدم واحد: "Ahmed is typing..."</li>
+                    <li>مستخدمين: "Ahmed and Sara are typing..."</li>
+                    <li>ثلاثة أو أكثر: "Ahmed, Sara and 2 others are typing..."</li>
+                </ul>
+            </div>
+
+            <div class="demo-box">
+                <h4>أمثلة:</h4>
+                <div class="typing-indicator-demo">
+                    <span>Ahmed and Sara are typing...</span>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="typing-indicator-demo">
+                    <span>Ahmed, Sara and 2 others are typing...</span>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: AI Typing Indicator -->
+        <div class="test-section">
+            <h2><span class="emoji">🤖</span> اختبار 3: مؤشر كتابة AI</h2>
+            <div class="test-description">
+                <p><strong>الهدف:</strong> التحقق من ظهور مؤشر الكتابة أثناء معالجة AI للرسالة</p>
+                <p><strong>كيفية الاختبار:</strong></p>
+                <ol>
+                    <li>ارسل رسالة تحتوي على "@ai" أو "hey ai"</li>
+                    <li>مثال: "@ai What is Node.js?"</li>
+                    <li>لاحظ ظهور "AI Assistant is typing..." فوراً</li>
+                    <li>المؤشر يستمر حتى يصل الرد (10-30 ثانية)</li>
+                    <li>يختفي المؤشر تلقائياً عند وصول الرد</li>
+                </ol>
+            </div>
+
+            <div class="demo-box">
+                <h4>مثال مؤشر AI:</h4>
+                <div class="typing-indicator-demo">
+                    <span>🤖 AI Assistant is typing...</span>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Auto-hide Timer -->
+        <div class="test-section">
+            <h2><span class="emoji">⏱️</span> اختبار 4: الاختفاء التلقائي</h2>
+            <div class="test-description">
+                <p><strong>الهدف:</strong> التحقق من اختفاء المؤشر بعد التوقف عن الكتابة</p>
+                <p><strong>السلوك المتوقع:</strong></p>
+                <ul>
+                    <li>عند الكتابة: يظهر المؤشر فوراً</li>
+                    <li>عند التوقف: ينتظر 2 ثانية</li>
+                    <li>بعد 2 ثانية: يختفي المؤشر تلقائياً</li>
+                    <li>عند الكتابة مرة أخرى: يعود المؤشر</li>
+                </ul>
+            </div>
+
+            <div class="status-box">
+                <h3>⚙️ إعدادات Timer</h3>
+                <div class="status-item">
+                    <span class="status-label">مدة الانتظار:</span>
+                    <span class="status-value">2000ms (ثانيتين)</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">نوع Timer:</span>
+                    <span class="status-value">Debounced</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">السلوك:</span>
+                    <span class="status-value">يتم إعادة تعيين Timer مع كل ضغطة مفتاح</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Room Switching -->
+        <div class="test-section">
+            <h2><span class="emoji">🚪</span> اختبار 5: تغيير الغرف</h2>
+            <div class="test-description">
+                <p><strong>الهدف:</strong> التحقق من مسح المؤشرات عند الانتقال لغرفة أخرى</p>
+                <p><strong>السلوك المتوقع:</strong></p>
+                <ol>
+                    <li>المؤشر يظهر فقط للمستخدمين في نفس الغرفة</li>
+                    <li>عند تغيير الغرفة: تُمسح كل المؤشرات</li>
+                    <li>في الغرفة الجديدة: تظهر مؤشرات جديدة حسب النشاط</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>📝 تعليمات الاختبار الشامل</h3>
+            <ol>
+                <li>تأكد من تشغيل السيرفر: <code>npm start</code></li>
+                <li>افتح صفحة الشات: <code>http://localhost:5000/chat.html</code></li>
+                <li>للاختبار الكامل، افتح نوافذ متعددة</li>
+                <li>راقب console الخاص بالمتصفح لرسائل التطوير</li>
+                <li>جرب جميع السيناريوهات المذكورة أعلاه</li>
+                <li>تحقق من عمل الميزة على متصفحات مختلفة</li>
+            </ol>
+        </div>
+
+        <!-- Status Summary -->
+        <div class="status-box">
+            <h3>✅ حالة التنفيذ</h3>
+            <div class="status-item">
+                <span class="status-label">مؤشر المستخدم:</span>
+                <span class="status-value success">✓ مُنفذ</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">عدة مستخدمين:</span>
+                <span class="status-value success">✓ مُنفذ</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">مؤشر AI:</span>
+                <span class="status-value success">✓ مُنفذ</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">الاختفاء التلقائي:</span>
+                <span class="status-value success">✓ مُنفذ</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">تغيير الغرف:</span>
+                <span class="status-value success">✓ مُنفذ</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Socket Events:</span>
+                <span class="status-value success">✓ مُنفذ</span>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="test-button" onclick="window.open('/chat.html', '_blank')">
+                🚀 فتح صفحة الشات
+            </button>
+            <button class="test-button" onclick="window.open('/chat.html', '_blank')">
+                🔄 فتح نافذة ثانية
+            </button>
+        </div>
+
+        <div class="footer">
+            <p>Cyphers Chat Application - Typing Indicators Feature</p>
+            <p>Implementation Date: 2026-10-09</p>
+        </div>
+    </div>
+</body>
+</html>

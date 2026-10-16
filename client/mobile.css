@@ -1,0 +1,324 @@
+/* =========================================================
+   Cyphers Chat — Mobile App Layer  (mobile.css)
+   حمّله بعد الـ <style> الأساسي. مش بيغيّر الديسكتوب.
+   ========================================================= */
+
+/* ---- متغيرات كانت ناقصة في الملف الأصلي (كانت بتكسر الأزرار) ---- */
+:root {
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, .35);
+  --background-elevated: #2d3650;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* زر الرجوع: مخفي على الديسكتوب */
+.mobile-back { display: none; }
+
+@media (max-width: 768px) {
+
+  /* ================= BASE ================= */
+  html, body {
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+  body::before { display: none; }                 /* خلفية متحركة = بطارية */
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+  button, .nav-tab, .room-btn, .friend-item { -webkit-user-select: none; user-select: none; }
+
+  /* لازم 16px وإلا iOS بيعمل zoom لما تدوس على الخانة */
+  input, textarea, select { font-size: 16px !important; }
+
+  /* ضيّع الـ blur التقيل (بيبطّأ التلفون) */
+  .sidebar, .message, .message.sent, .message.received,
+  .chat-header, #chat-form {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .chat-app {
+    display: block;
+    height: var(--vvh, 100dvh);
+    position: fixed; inset: 0;
+    overflow: hidden;
+    background: var(--background-primary);
+  }
+
+  /* ================= الشاشة 1: القائمة (زي واتساب) ================= */
+  .sidebar {
+    position: absolute; inset: 0;
+    width: 100%; min-width: 0;
+    max-height: none; height: 100%;
+    padding: 0;
+    background: var(--background-primary);
+    border: 0; box-shadow: none;
+    display: flex; flex-direction: column;
+    overflow-y: auto; overflow-x: hidden;
+    padding-top: var(--safe-top);
+    z-index: 1;
+  }
+  .sidebar::before { display: none; }
+
+  .sidebar-header {
+    padding: 14px 16px 6px;
+    border: 0;
+    display: flex; align-items: center;
+    min-height: 56px;
+  }
+  .logo { margin: 0; max-width: none; height: 32px; width: auto; filter: none; }
+  .logo:hover { transform: none; }
+
+  /* اسم المستخدم فوق على اليمين */
+  .user-profile {
+    position: absolute; top: calc(var(--safe-top) + 14px); right: 14px;
+    margin: 0; padding: 6px 14px;
+    border-radius: 999px; box-shadow: none; z-index: 2;
+  }
+  .user-profile p, #username-display { font-size: .85rem; }
+
+  .search-container { padding: 6px 14px 10px; }
+  #search-input {
+    border-radius: 999px; border: 0;
+    padding: 11px 18px; background: var(--background-secondary);
+  }
+
+  /* ---- تابات تحت زي تطبيقات الموبايل ---- */
+  .nav-tabs {
+    order: 99;
+    position: sticky; bottom: 0;
+    margin-top: auto;
+    padding: 6px 8px calc(6px + var(--safe-bottom));
+    background: var(--background-secondary);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 0;
+    z-index: 20;
+  }
+  .nav-tab {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 0; font-size: 1.15rem;
+    border-radius: 12px;
+  }
+  .sidebar .nav-tab::after,
+  .sidebar .nav-tab.active::after {
+    position: static; width: auto; height: auto;
+    background: none; border-radius: 0;
+    font-size: .68rem; font-weight: 600; letter-spacing: .2px;
+  }
+  .sidebar .nav-tab[data-tab="rooms"]::after      { content: "Rooms"; }
+  .sidebar .nav-tab[data-tab="friends"]::after    { content: "Friends"; }
+  .sidebar .nav-tab[data-tab="add-friend"]::after { content: "Add"; }
+  .nav-tab.active { color: var(--accent-secondary); background: rgba(74, 108, 255, .14); }
+
+  /* ---- الغرف كصفوف شات ---- */
+  .room-list h2, .friends-list h2 {
+    margin: 10px 16px 4px; padding: 0;
+    font-size: .8rem; letter-spacing: .6px;
+  }
+  .room-list ul { display: flex; flex-direction: column; gap: 0; }
+  .room-btn {
+    width: 100%; margin: 0;
+    padding: 12px 16px;
+    background: transparent; border: 0; border-radius: 0;
+    box-shadow: none; gap: 14px;
+    font-size: 1.02rem; min-height: 68px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .room-btn:hover { transform: none; background: transparent; box-shadow: none; }
+  .room-btn:active, .room-btn.active { background: rgba(74, 108, 255, .16); }
+  .room-btn i {
+    width: 46px; height: 46px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-size: 1.1rem; color: #fff;
+    background: linear-gradient(135deg, #4a6cff, #6b7aff);
+  }
+  .room-btn:hover i { transform: none; }
+  .room-list li:nth-child(2) .room-btn i { background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+  .room-list li:nth-child(3) .room-btn i { background: linear-gradient(135deg, #10b981, #34d399); }
+  .room-list li:nth-child(4) .room-btn i { background: linear-gradient(135deg, #a855f7, #ec4899); }
+
+  /* ---- زر الـ AI عايم (FAB) ---- */
+  #askAIButton {
+    position: fixed; left: auto; right: 16px;
+    bottom: calc(76px + var(--safe-bottom));
+    transform: none; width: auto; margin: 0;
+    padding: 14px 20px; border-radius: 999px; gap: .6rem;
+    box-shadow: 0 8px 24px rgba(74, 108, 255, .5);
+    z-index: 30;
+  }
+  #askAIButton:hover, #askAIButton:active { transform: scale(.96); }
+  #askAIButton i { font-size: 1.1rem; }
+
+  /* ---- الأصدقاء ---- */
+  .friends-list, .add-friend { padding: 6px 0; }
+  .friend-item { padding: 12px 16px; border-radius: 0; gap: 14px; min-height: 68px;
+    border-bottom: 1px solid var(--border-color); }
+  .friend-item:active { background: rgba(74, 108, 255, .12); }
+  .friend-action-btn { width: 40px; height: 40px; }
+  .add-friend-input { padding: 6px 16px; }
+  .friend-requests h3 { padding: 6px 16px; font-size: .9rem; color: var(--text-secondary); }
+  .mobile-avatar {
+    width: 46px; height: 46px; flex-shrink: 0; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: #fff; font-size: 1.05rem;
+  }
+
+  /* ================= الشاشة 2: الشات (full screen + slide) ================= */
+  .chat-main {
+    position: fixed; left: 0; right: 0;
+    top: var(--vvt, 0px);
+    height: var(--vvh, 100dvh);
+    z-index: 40;
+    background: var(--background-primary);
+    transform: translateX(100%);
+    transition: transform .28s cubic-bezier(.4, 0, .2, 1);
+    will-change: transform;
+  }
+  .chat-app.chat-open .chat-main { transform: none; }   /* none = مايكسرش position:fixed للأبناء */
+
+  /* ---- الهيدر: [رجوع] [اسم الغرفة + أونلاين] [خروج] [إعدادات] ---- */
+  .chat-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas: "back title leave settings" "back online leave settings";
+    align-items: center; column-gap: 4px; row-gap: 0;
+    padding: calc(var(--safe-top) + 6px) 8px 6px 4px;
+    min-height: calc(56px + var(--safe-top));
+    background: var(--background-secondary);
+    box-shadow: 0 1px 0 var(--border-color);
+  }
+  .mobile-back {
+    grid-area: back;
+    display: flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border: 0; border-radius: 50%;
+    background: transparent; color: var(--text-primary); font-size: 1.15rem;
+  }
+  .mobile-back:active { background: rgba(255, 255, 255, .1); }
+  .chat-header h2 { grid-area: title; font-size: 1.08rem; gap: .4rem; line-height: 1.2; }
+  .chat-header h2::before { display: none; }
+  .chat-header h2 i { font-size: .9rem; color: var(--text-secondary); }
+  #online-users {
+    grid-area: online; justify-self: start; margin: 0;
+    padding: 0; background: none; border: 0; box-shadow: none;
+    font-size: .74rem; font-weight: 500; gap: .35rem; transform: none;
+  }
+  #online-users:hover { transform: none; box-shadow: none; }
+  #online-users > i { display: none; }
+  #leave-room, .settings-btn, #settings-btn {
+    width: 40px; height: 40px; padding: 0; margin: 0;
+    justify-content: center; align-items: center;
+    background: transparent; box-shadow: none; border-radius: 50%;
+    color: var(--text-primary); font-size: 1.05rem;
+  }
+  #leave-room { grid-area: leave; }
+  #settings-btn { grid-area: settings; }
+  #leave-room:hover, #settings-btn:hover { transform: none; box-shadow: none; }
+  #leave-room:active, #settings-btn:active { background: rgba(255, 255, 255, .1); }
+
+  /* ---- الرسايل (فقاعات زي واتساب) ---- */
+  .chat-box {
+    padding: 10px 10px 6px; gap: 3px;
+    scroll-behavior: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .message {
+    display: flex; flex-direction: column;
+    min-width: 72px; max-width: 82%;
+    padding: 7px 11px 5px;
+    border-radius: 14px; font-size: 15px; line-height: 1.45;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    margin-bottom: 2px;
+  }
+  .message:hover { transform: none; box-shadow: 0 1px 2px rgba(0, 0, 0, .25); }
+  .message.sent { border-bottom-right-radius: 4px; background: linear-gradient(135deg, #4a6cff, #5b78ff); }
+  .message.received { border-bottom-left-radius: 4px; background: var(--background-tertiary); }
+  .message.ai-message { background: linear-gradient(135deg, #2a3555, #2f3a5e); }
+
+  /* الاسم فوق / الوقت تحت يمين */
+  .message-header { display: contents; }
+  .message > * { order: 1; }
+  .message .username { order: -2; font-size: 13px; margin-bottom: 2px; }
+  .message.sent .username { display: none; }
+  .message .replied-message { order: -1; }
+  .message .message-reactions { order: 2; }
+  .message .timestamp {
+    order: 5; align-self: flex-end;
+    margin: 2px 0 0; font-size: 10.5px; color: rgba(255, 255, 255, .6);
+  }
+  .message-text { font-size: 15px; }
+  .replied-message { padding: 8px 10px; margin-bottom: 6px; border-left: 3px solid var(--accent-secondary); border-radius: 6px; }
+  .message-media { max-height: 260px; width: 100%; object-fit: cover; margin-bottom: 4px; border-radius: 10px; }
+  .message img { border-radius: 10px; }
+
+  /* أزرار الرسالة: بتظهر بالضغطة (mobile.js بيضيف .show-actions) */
+  .message:hover .message-actions, .message:hover .reply-overlay { opacity: 0; visibility: hidden; display: none; }
+  .message-actions { top: -38px; right: 6px; }
+  .message.show-actions .message-actions { opacity: 1; visibility: visible; display: flex; }
+  .message.show-actions .reply-overlay { display: flex; position: static; align-self: flex-end; margin-top: 4px; }
+  .action-btn { width: 40px; height: 40px; }
+
+  /* ---- مؤشر الكتابة + الرد ---- */
+  .typing-indicator { margin: 0 12px 6px; padding: 4px 12px; font-size: .78rem; }
+  #reply-container {
+    padding: 8px 12px; margin: 0;
+    border-left: 4px solid var(--accent-primary);
+    background: var(--background-secondary);
+  }
+  #reply-cancel { background: none; border: 0; width: 36px; height: 36px; }
+
+  /* ---- شريط الكتابة: [😀] [ pill input ] [📎] [➤] ---- */
+  #chat-form {
+    padding: 8px 8px calc(8px + var(--safe-bottom));
+    gap: 6px; background: var(--background-secondary);
+    align-items: flex-end;
+  }
+  #chat-input {
+    order: 2; min-height: 44px; border-radius: 22px;
+    padding: 10px 16px; box-shadow: none; flex: 1;
+  }
+  #chat-input:focus { box-shadow: none; }
+  #emoji-btn { order: 1; }
+  #upload-btn { order: 3; }
+  #send-btn { order: 4; }
+  #upload-btn, #emoji-btn {
+    width: 42px; height: 42px; border: 0; background: transparent;
+    border-radius: 50%; font-size: 1.25rem;
+  }
+  #upload-btn:hover, #emoji-btn:hover { transform: none; }
+  #chat-form #send-btn {
+    width: 44px; height: 44px; min-width: 44px; padding: 0;
+    border-radius: 50%; border: 0;
+  }
+  #send-btn span { display: none; }
+  #send-btn:hover { transform: none; }
+  #send-btn:active { transform: scale(.92); }
+
+  /* ---- الإيموجي: بوتوم شيت ---- */
+  #emoji-picker {
+    left: 8px; right: 8px; width: auto; min-width: 0; max-width: none;
+    bottom: calc(68px + var(--safe-bottom));
+    border-radius: 18px; padding: 10px;
+    transform-origin: bottom center;
+  }
+  .emoji-grid { grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); height: min(260px, 38dvh); }
+  .emoji-item { width: 42px; height: 42px; font-size: 26px; }
+
+  /* ---- باقي العناصر ---- */
+  #media-viewer { border-radius: 0; }
+  #media-viewer-close { top: calc(var(--safe-top) + 12px); }
+  .in-app-notification { left: 12px; right: 12px; top: calc(var(--safe-top) + 10px); min-width: 0; max-width: none; }
+  .settings-panel { height: var(--vvh, 100dvh); z-index: 10001; }
+  .settings-header { padding: calc(var(--safe-top) + 12px) 16px 12px; }
+  .settings-body { padding: 16px 16px calc(24px + var(--safe-bottom)); }
+  .setting-item label { padding: 12px 8px; }
+  .voice-recorder-ui { bottom: calc(80px + var(--safe-bottom)); }
+}

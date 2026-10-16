@@ -1,15 +1,27 @@
 const mysql = require('mysql2');
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-// إعداد الاتصال بقاعدة البيانات
+// إعداد الاتصال بقاعدة البيانات من .env
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root', // استبدل باسم المستخدم
-    password: '', // استبدل بكلمة المرور
-    database: 'cyphers', // استبدل باسم قاعدة البيانات
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 3306,
+    user: process.env.DB_USER || 'root', 
+    password: process.env.DB_PASS || '', 
+    database: process.env.DB_NAME || 'final-db', 
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    connectTimeout: 10000, // 10 seconds timeout
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
 });
+
+// Log database configuration (without password)
+console.log('📊 Database Configuration:');
+console.log('   Host:', process.env.DB_HOST || 'localhost');
+console.log('   User:', process.env.DB_USER || 'root');
+console.log('   Database:', process.env.DB_NAME || 'final-db');
+console.log('   Password:', process.env.DB_PASS ? '***SET***' : '***EMPTY***');
 
 // وظيفة عامة لتنفيذ الاستعلامات
 const query = async (sql, params = []) => {
@@ -41,10 +53,10 @@ const getMessagesByRoom = async (room) => {
                 replyToText
             FROM messages 
             WHERE room = ? 
-            ORDER BY timestamp ASC 
+            ORDER BY timestamp DESC, id DESC 
             LIMIT 50
         `;
-        return await query(sql, [room]);
+        return (await query(sql, [room])).reverse();
     } catch (error) {
         console.error('Error getting messages by room:', error);
         throw error;
@@ -170,10 +182,10 @@ const addFriend = async (user1, user2) => {
         const sql = `
             INSERT INTO friends 
             (user1, user2, created_at)
-            VALUES (?, ?, NOW()), (?, ?, NOW())
+            VALUES (?, ?, NOW())
         `;
         
-        const result = await pool.promise().execute(sql, [user1, user2, user2, user1]);
+        const result = await pool.promise().execute(sql, [user1, user2].sort());
         return {
             affectedRows: result[0].affectedRows
         };
@@ -227,7 +239,7 @@ const removeFriend = async (user1, user2) => {
 // إغلاق الاتصال
 const closeConnection = async () => {
     try {
-        await pool.end();
+        await pool.promise().end();
         console.log('Database connection closed.');
     } catch (error) {
         console.error('Error closing database connection:', error);
@@ -238,13 +250,29 @@ const closeConnection = async () => {
 const testConnection = async () => {
     try {
         const [rows] = await pool.promise().query('SELECT 1');
-        console.log('Database connection successful');
+        console.log('✅ Database connection successful');
         return true;
     } catch (error) {
-        console.error('Database connection failed:', error);
+        console.error('❌ Database connection failed:', error.message);
+        console.error('   Code:', error.code);
+        console.error('   errno:', error.errno);
+        
+        // Provide helpful error messages
+        if (error.code === 'ER_ACCESS_DENIED_ERROR') {
+            console.error('   ⚠️  Access denied - check DB_USER and DB_PASS in .env');
+        } else if (error.code === 'ER_BAD_DB_ERROR') {
+            console.error('   ⚠️  Database not found - check DB_NAME in .env');
+        } else if (error.code === 'ECONNREFUSED') {
+            console.error('   ⚠️  Connection refused - check if MySQL is running and DB_HOST is correct');
+        } else if (error.code === 'ENOTFOUND') {
+            console.error('   ⚠️  Host not found - check DB_HOST in .env');
+        }
+        
         return false;
     }
 };
+
+// Call testConnection explicitly when needed.
 
 module.exports = {
     // Database connection
